@@ -1,0 +1,106 @@
+
+.explore {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .explo {
+    height: 70px;
+    width: 1000px;
+    display: flex;
+    justify-content: left;
+    align-items: start;
+  }
+
+  /* Keyframe animation for left to right effect */
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%) scale(0.5); /* Start from left outside the viewport */
+    }
+    to {
+      transform: translateX(0) scale(1); /* End at normal position */
+    }
+  }
+
+  .boxex {
+    height: 100px;
+    width: 1000px;
+    margin-top: 20px;
+    background-size: cover;
+    border-radius: 20px;
+    border: groove red 5px;
+    transition: transform 1.5s ease, filter 0.3s ease;
+    transform: scale(1); /* Start at half the size */
+    position: relative;
+    z-index: 1;
+    overflow: hidden; /* Hide overflow for pseudo-element */
+    animation: none; /* Initially no animation */
+  }
+
+  .boxex:hover {
+    filter: blur(5px);
+  }
+
+  .boxex:hover {
+    transform: scale(1.0);
+    z-index: 2;
+    filter: none;
+  }
+
+  .boxex::after {
+    content: attr(data-name) ": " attr(data-description);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Ignore pointer events on description */
+  }
+
+  .boxex:hover::after {
+    opacity: 1;
+  }
+  .boxex h1{
+    font-family: cursive;
+    font-weight: bold;
+    padding-left:20px ;
+  }
+  @media screen and (max-width : 790px){
+    .boxex {
+      height: 70px;
+      width: 91%;  
+      margin-top: 20px;
+      background-size: cover;
+      border-radius: 20px;
+      border: groove red 5px;
+      transition: transform 1.5s ease, filter 0.3s ease;
+      transform: scale(1); /* Start at half the size */
+      position: relative;
+      z-index: 1;
+      overflow: hidden; /* Hide overflow for pseudo-element */
+      animation: none; /* Initially no animation */
+    }
+    .explo {
+      height: 70px;
+      width: 100%;
+      display: flex;
+      justify-content: left;
+      align-items: start;
+    }
+    .explo {
+      height: 70px;
+      width: 100%;
+      justify-content: center;
+      align-items: start;
+    }  
+  }

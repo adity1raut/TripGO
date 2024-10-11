@@ -1,0 +1,30 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Django specific files
+db.sqlite3
+/media/
+.static/
+*.log
+
+# Virtual environment
+env/
+venv/
+.venv/
+.env
+
+# Local settings
+myproject/settings/local.py  # Adjust if you have local settings
+
+# IDE or editor files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Other files to ignore
+*.pot
+*.pyc
+
+.env

@@ -1,0 +1,106 @@
+
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 1);
+}
+
+.footer {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 1000px;
+}
+
+.foot2, .foot3 , .foot1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    width: 200px;
+    text-align: left; 
+}
+
+
+
+.links {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0 0; /* Top margin to add space below the heading */
+    font-size: 20px; /* Font size for the links */
+}
+
+.links li {
+    margin-bottom: 10px; /* Spacing between list items */
+}
+
+.links a {
+    color: black;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline; /* Underline on hover */
+    color: #007bff; /* Change color on hover */
+}       
+
+.social-title {
+    font-size: 30px; /* Font size for the social media title */
+}
+
+.social-icons {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 30px; /* Font size for the social media icons */
+    margin-top: 10px;
+}
+
+.social-icon {
+    color: black;
+    text-decoration: none;
+    margin: 0 10px; /* Adds 10px gap on both sides of each icon */
+}
+
+.social-icon:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+.link {
+    background-color: black;
+    color: white;
+    text-align: center;
+    height: 30px;
+    width: 97.1%;
+    padding: 20px;
+}
+
+.link h1 {
+    font-size: 24px;
+    margin: 0;
+}
+@media screen and (max-width: 790px){
+    .footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .link {
+        background-color: black;
+        color: white;
+        text-align: center;
+        height:22px;
+        width: 100%;
+        padding: 20px;
+    }
+    .f_box {
+        display: flex;
+        flex-direction: row;
+    }
+}

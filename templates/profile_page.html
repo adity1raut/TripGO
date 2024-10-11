@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        .profile_form,
+        .post_form {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile_div">
+        <div class="profile_header">
+            <div class="profile_image">
+                <img src="{{ profile.profile_image.url }}" alt="Profile Image">
+            </div>
+            <div class="profile_info">
+                <h1>{{ profile.name }}</h1>
+                <p>{{ profile.location }}</p>
+                <p>{{ profile.bio }}</p>
+            </div>
+        </div>
+
+        <div class="profile_button">
+            <!-- Button to toggle Update Profile form visibility -->
+            <button id="editProfileBtn">Edit Profile</button><br><br>
+            <!-- Button to toggle Suggestions form visibility -->
+            <button id="suggestionBtn">Add Suggestion</button><br><br>
+            <a href=""><button>Log out</button></a>
+        </div>
+
+        <!-- Update Profile Form (Initially Hidden) -->
+        <div class="profile_form" id="profileForm">
+            <h2>Update Profile</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" value="{{ profile.name }}" required><br><br>
+                <label for="image">Profile Image:</label><br>
+                <input type="file" id="image" name="image" accept="image/*"><br><br>
+                <label for="location">Location:</label><br>
+                <input type="text" id="location" name="location" value="{{ profile.location }}" required><br><br>
+                <label for="bio">Bio:</label><br>
+                <textarea id="bio" name="bio" rows="4" cols="30" required>{{ profile.bio }}</textarea><br><br>
+                <button type="submit" name="profile_update">Update</button>
+            </form>
+        </div>
+
+        <!-- Suggestions Form (Initially Hidden) -->
+        <div class="post_form" id="suggestionForm">
+            <h2>Suggestions</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <label for="post_city">City:</label><br>
+                <input type="text" id="post_city" name="post_city" required><br><br>
+
+                <label for="post_location">Location:</label><br>
+                <input type="text" id="post_location" name="post_location" readonly><br><br>
+
+                <label for="post_image">Image:</label><br>
+                <input type="file" id="post_image" name="post_image" accept="image/*" required><br><br>
+
+                <label for="post_description">Description:</label><br>
+                <textarea id="post_description" name="post_description" rows="4" cols="30" required></textarea><br><br>
+
+                <button type="submit" name="post_form">Submit</button>
+            </form>
+        </div>
+
+
+        <div class="profile_posts">
+            <h2>Your Suggestions</h2>
+            {% for post in posts %}
+            <div class="post">
+                <h3>{{ post.city }}</h3>
+                <p>{{ post.description }}</p>
+                <img src="{{ post.post_image.url }}" alt="Post Image">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        // Toggle the Update Profile form
+        document.getElementById('editProfileBtn').addEventListener('click', function () {
+            var profileForm = document.getElementById('profileForm');
+            profileForm.style.display = profileForm.style.display === 'none' || profileForm.style.display === '' ? 'block' : 'none';
+        });
+
+        // Toggle the Suggestions form
+        document.getElementById('suggestionBtn').addEventListener('click', function () {
+            var suggestionForm = document.getElementById('suggestionForm');
+            suggestionForm.style.display = suggestionForm.style.display === 'none' || suggestionForm.style.display === '' ? 'block' : 'none';
+        });
+        // Function to get current location
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Function to show the position (latitude and longitude)
+        function showPosition(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            // Use a reverse-geocoding API (OpenStreetMap example)
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+                .then(response => response.json())
+                .then(data => {
+                    const city = data.address.city || data.address.town || data.address.village;
+                    const locationField = document.getElementById('post_location');
+                    locationField.value = city ? city : "Location not found";
+                })
+                .catch(error => console.error('Error fetching location:', error));
+        }
+
+        // Function to handle errors
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+
+        // Call the getLocation function when the page loads or when the form is opened
+        document.getElementById('suggestionBtn').addEventListener('click', function () {
+            getLocation();
+        });
+    </script>
+</body>
+
+</html>
